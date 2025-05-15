@@ -8,14 +8,27 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
+import { Construction } from 'lucide-react';
 
 const Settings = () => {
   const { toast } = useToast();
+  const [maintenanceMode, setMaintenanceMode] = React.useState(false);
 
   const handleSave = () => {
     toast({
       title: "Settings Saved",
       description: "Your settings have been saved successfully",
+    });
+  };
+
+  const handleMaintenanceToggle = (checked: boolean) => {
+    setMaintenanceMode(checked);
+    toast({
+      title: checked ? "Maintenance Mode Enabled" : "Maintenance Mode Disabled",
+      description: checked ? 
+        "Your portfolio site is now in maintenance mode and not accessible to visitors." : 
+        "Your portfolio site is now back online and accessible to visitors.",
+      variant: checked ? "destructive" : "default",
     });
   };
 
@@ -25,6 +38,33 @@ const Settings = () => {
         <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
         <p className="text-gray-600">Manage your application settings</p>
       </div>
+
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle>Site Availability</CardTitle>
+          <CardDescription>
+            Control the availability of your portfolio website
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <Label htmlFor="maintenance-mode" className="flex items-center gap-2">
+                <Construction className="h-4 w-4" />
+                Maintenance Mode
+              </Label>
+              <p className="text-sm text-gray-500">
+                When enabled, visitors will see a maintenance message instead of your portfolio
+              </p>
+            </div>
+            <Switch 
+              id="maintenance-mode" 
+              checked={maintenanceMode}
+              onCheckedChange={handleMaintenanceToggle}
+            />
+          </div>
+        </CardContent>
+      </Card>
 
       <Tabs defaultValue="general" className="w-full">
         <TabsList className="mb-6">
