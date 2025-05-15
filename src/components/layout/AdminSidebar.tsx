@@ -49,7 +49,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed }) => {
                     isActive
                       ? 'bg-sidebar-accent text-white'
                       : 'hover:bg-sidebar-accent/50 text-gray-300 hover:text-white'
-                  }`
+                  } ${collapsed ? 'justify-center' : ''}`
                 }
                 aria-label={item.name}
               >
@@ -62,7 +62,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed }) => {
       </nav>
 
       <div className="p-4 mt-auto">
-        <button className="flex items-center gap-3 w-full px-4 py-2 text-gray-300 hover:text-white rounded-md hover:bg-sidebar-accent/50 transition-colors" aria-label="Logout">
+        <button className={`flex items-center gap-3 w-full px-4 py-2 text-gray-300 hover:text-white rounded-md hover:bg-sidebar-accent/50 transition-colors ${collapsed ? 'justify-center' : ''}`} aria-label="Logout">
           <LogOut size={20} />
           {!collapsed && <span className="transition-opacity duration-200">Logout</span>}
         </button>
