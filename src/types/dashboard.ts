@@ -1,4 +1,5 @@
 
+
 export interface Activity {
   id: number;
   type: 'project' | 'message' | 'system';
@@ -41,3 +42,26 @@ export interface ProfileData {
     github: string;
   };
 }
+
+export interface PortfolioStats {
+  totalProjects: number;
+  totalCertifications: number;
+  resumeDownloads: number;
+  totalMessages: number;
+  usersVisited: number;
+  mostViewedProject: {
+    id: number;
+    name: string;
+    views: number;
+  };
+}
+
+export interface Certification {
+  id: number;
+  name: string;
+  issuer: string;
+  date: string;
+  expires?: string;
+  credentialURL?: string;
+}
+

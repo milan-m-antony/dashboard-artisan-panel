@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { LucideIcon } from 'lucide-react';
+import { ArrowUp, ArrowDown } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface StatCardProps {
   title: string;
@@ -21,27 +22,34 @@ export const StatCard: React.FC<StatCardProps> = ({
   bgColor = 'bg-white',
 }) => {
   return (
-    <div className={`stat-card ${bgColor}`}>
-      <div className="flex justify-between items-start">
-        <div>
-          <p className="stat-value">{value}</p>
-          <p className="stat-label">{title}</p>
+    <Card>
+      <CardContent className="p-6">
+        <div className="flex justify-between items-start">
+          <div>
+            <p className="text-3xl font-bold">{value}</p>
+            <p className="text-sm text-gray-500 mt-1">{title}</p>
+          </div>
+          <div className="p-2 bg-gray-100 rounded-full">{icon}</div>
         </div>
-        <div className="p-2 bg-gray-100 rounded-full">{icon}</div>
-      </div>
-      
-      {trend && (
-        <div className="mt-4 flex items-center">
-          <span
-            className={`text-xs font-medium ${
-              trend.positive ? 'text-green-600' : 'text-red-600'
-            }`}
-          >
-            {trend.positive ? '+' : '-'}{Math.abs(trend.value)}%
-          </span>
-          <span className="text-xs text-gray-500 ml-2">from last month</span>
-        </div>
-      )}
-    </div>
+        
+        {trend && (
+          <div className="mt-4 flex items-center">
+            {trend.positive ? (
+              <ArrowUp size={14} className="text-green-600" />
+            ) : (
+              <ArrowDown size={14} className="text-red-600" />
+            )}
+            <span
+              className={`text-xs font-medium ml-1 ${
+                trend.positive ? 'text-green-600' : 'text-red-600'
+              }`}
+            >
+              {Math.abs(trend.value)}%
+            </span>
+            <span className="text-xs text-gray-500 ml-2">from last month</span>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };

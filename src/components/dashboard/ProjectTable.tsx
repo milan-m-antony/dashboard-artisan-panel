@@ -1,14 +1,8 @@
 
 import React from 'react';
 import { Eye, Edit, Trash } from 'lucide-react';
-
-export interface Project {
-  id: number;
-  name: string;
-  category: string;
-  status: 'published' | 'draft';
-  date: string;
-}
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
+import { Project } from '@/types/dashboard';
 
 interface ProjectTableProps {
   projects: Project[];
@@ -24,37 +18,27 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
   onView,
 }) => {
   return (
-    <div className="overflow-x-auto rounded-lg shadow">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
-          <tr>
-            <th scope="col" className="table-header">
-              Name
-            </th>
-            <th scope="col" className="table-header">
-              Category
-            </th>
-            <th scope="col" className="table-header">
-              Status
-            </th>
-            <th scope="col" className="table-header">
-              Date
-            </th>
-            <th scope="col" className="table-header">
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+    <div className="overflow-x-auto">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Category</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Date</TableHead>
+            <TableHead>Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {projects.map((project) => (
-            <tr key={project.id}>
-              <td className="table-cell font-medium">
+            <TableRow key={project.id}>
+              <TableCell className="font-medium">
                 {project.name}
-              </td>
-              <td className="table-cell">
+              </TableCell>
+              <TableCell>
                 {project.category}
-              </td>
-              <td className="table-cell">
+              </TableCell>
+              <TableCell>
                 <span
                   className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                     project.status === 'published'
@@ -64,11 +48,11 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
                 >
                   {project.status}
                 </span>
-              </td>
-              <td className="table-cell">
+              </TableCell>
+              <TableCell>
                 {project.date}
-              </td>
-              <td className="table-cell">
+              </TableCell>
+              <TableCell>
                 <div className="flex space-x-2">
                   <button
                     onClick={() => onView(project.id)}
@@ -89,11 +73,11 @@ export const ProjectTable: React.FC<ProjectTableProps> = ({
                     <Trash size={18} />
                   </button>
                 </div>
-              </td>
-            </tr>
+              </TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </div>
   );
 };
