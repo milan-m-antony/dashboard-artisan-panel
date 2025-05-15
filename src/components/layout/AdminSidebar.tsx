@@ -7,9 +7,7 @@ import {
   Mail, 
   Settings, 
   User, 
-  LogOut, 
-  ChevronLeft, 
-  ChevronRight
+  LogOut
 } from 'lucide-react';
 
 interface AdminSidebarProps {
@@ -27,20 +25,20 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed }) => {
 
   return (
     <aside 
-      className={`bg-sidebar text-sidebar-foreground h-screen ${collapsed ? 'w-20' : 'w-64'} transition-all duration-300 flex flex-col`}
+      className={`bg-sidebar text-sidebar-foreground h-screen ${collapsed ? 'w-[70px]' : 'w-64'} transition-all duration-300 flex flex-col shadow-md fixed md:relative z-20`}
     >
       <div className={`py-6 px-4 flex items-center ${collapsed ? 'justify-center' : 'justify-between'}`}>
         {!collapsed && (
           <h2 className="text-xl font-bold text-white">Portfolio Admin</h2>
         )}
         {collapsed && (
-          <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bold">
+          <div className="w-10 h-10 rounded-full bg-sidebar-accent flex items-center justify-center text-white font-bold">
             PA
           </div>
         )}
       </div>
 
-      <nav className="flex-1 mt-6">
+      <nav className="flex-1 mt-6 overflow-y-auto">
         <ul className="space-y-1 px-2">
           {navItems.map((item) => (
             <li key={item.path}>
@@ -53,9 +51,10 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed }) => {
                       : 'hover:bg-sidebar-accent/50 text-gray-300 hover:text-white'
                   }`
                 }
+                aria-label={item.name}
               >
                 <span>{item.icon}</span>
-                {!collapsed && <span>{item.name}</span>}
+                {!collapsed && <span className="transition-opacity duration-200">{item.name}</span>}
               </NavLink>
             </li>
           ))}
@@ -63,9 +62,9 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed }) => {
       </nav>
 
       <div className="p-4 mt-auto">
-        <button className="flex items-center gap-3 w-full px-4 py-2 text-gray-300 hover:text-white rounded-md hover:bg-sidebar-accent/50 transition-colors">
+        <button className="flex items-center gap-3 w-full px-4 py-2 text-gray-300 hover:text-white rounded-md hover:bg-sidebar-accent/50 transition-colors" aria-label="Logout">
           <LogOut size={20} />
-          {!collapsed && <span>Logout</span>}
+          {!collapsed && <span className="transition-opacity duration-200">Logout</span>}
         </button>
       </div>
     </aside>

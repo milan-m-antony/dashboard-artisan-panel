@@ -8,10 +8,13 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
-import { Construction } from 'lucide-react';
+import { Construction, Save } from 'lucide-react';
+import { useTheme } from '@/hooks/use-theme';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
 const Settings = () => {
   const { toast } = useToast();
+  const { theme, setTheme } = useTheme();
   const [maintenanceMode, setMaintenanceMode] = React.useState(false);
 
   const handleSave = () => {
@@ -32,42 +35,74 @@ const Settings = () => {
     });
   };
 
+  const handleThemeChange = (value: string) => {
+    setTheme(value as 'light' | 'dark' | 'system');
+  };
+
   return (
     <AdminLayout>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-        <p className="text-gray-600">Manage your application settings</p>
+        <h1 className="text-2xl font-bold text-foreground">Settings</h1>
+        <p className="text-muted-foreground">Manage your application settings</p>
       </div>
 
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle>Site Availability</CardTitle>
-          <CardDescription>
-            Control the availability of your portfolio website
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label htmlFor="maintenance-mode" className="flex items-center gap-2">
-                <Construction className="h-4 w-4" />
-                Maintenance Mode
-              </Label>
-              <p className="text-sm text-gray-500">
-                When enabled, visitors will see a maintenance message instead of your portfolio
-              </p>
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card className="mb-6 md:col-span-2">
+          <CardHeader>
+            <CardTitle>Site Availability</CardTitle>
+            <CardDescription>
+              Control the availability of your portfolio website
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label htmlFor="maintenance-mode" className="flex items-center gap-2">
+                  <Construction className="h-4 w-4" />
+                  Maintenance Mode
+                </Label>
+                <p className="text-sm text-muted-foreground">
+                  When enabled, visitors will see a maintenance message instead of your portfolio
+                </p>
+              </div>
+              <Switch 
+                id="maintenance-mode" 
+                checked={maintenanceMode}
+                onCheckedChange={handleMaintenanceToggle}
+              />
             </div>
-            <Switch 
-              id="maintenance-mode" 
-              checked={maintenanceMode}
-              onCheckedChange={handleMaintenanceToggle}
-            />
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+
+        <Card className="mb-6 md:col-span-2">
+          <CardHeader>
+            <CardTitle>Theme Preferences</CardTitle>
+            <CardDescription>
+              Customize the appearance of your admin dashboard
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label>Theme Mode</Label>
+                <ToggleGroup 
+                  type="single" 
+                  value={theme} 
+                  onValueChange={(value) => value && handleThemeChange(value)}
+                  className="justify-start"
+                >
+                  <ToggleGroupItem value="light" aria-label="Light Mode">Light</ToggleGroupItem>
+                  <ToggleGroupItem value="dark" aria-label="Dark Mode">Dark</ToggleGroupItem>
+                  <ToggleGroupItem value="system" aria-label="System Preference">System</ToggleGroupItem>
+                </ToggleGroup>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       <Tabs defaultValue="general" className="w-full">
-        <TabsList className="mb-6">
+        <TabsList className="mb-6 w-full md:w-auto overflow-x-auto">
           <TabsTrigger value="general">General</TabsTrigger>
           <TabsTrigger value="appearance">Appearance</TabsTrigger>
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
@@ -83,46 +118,51 @@ const Settings = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="site-name">Portfolio Name</Label>
-                <Input id="site-name" defaultValue="Jane Doe Portfolio" />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="site-description">Site Description</Label>
-                <Input 
-                  id="site-description" 
-                  defaultValue="Creative designer and developer showcasing my work and services" 
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="contact-email">Contact Email</Label>
-                <Input 
-                  id="contact-email" 
-                  type="email" 
-                  defaultValue="contact@janedoe.com" 
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="footer-text">Footer Text</Label>
-                <Input 
-                  id="footer-text" 
-                  defaultValue="© 2023 Jane Doe. All rights reserved." 
-                />
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="site-name">Portfolio Name</Label>
+                  <Input id="site-name" defaultValue="Jane Doe Portfolio" />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="site-description">Site Description</Label>
+                  <Input 
+                    id="site-description" 
+                    defaultValue="Creative designer and developer showcasing my work and services" 
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="contact-email">Contact Email</Label>
+                  <Input 
+                    id="contact-email" 
+                    type="email" 
+                    defaultValue="contact@janedoe.com" 
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="footer-text">Footer Text</Label>
+                  <Input 
+                    id="footer-text" 
+                    defaultValue="© 2023 Jane Doe. All rights reserved." 
+                  />
+                </div>
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label htmlFor="analytics">Google Analytics</Label>
-                  <p className="text-sm text-gray-500">Enable Google Analytics tracking</p>
+                  <p className="text-sm text-muted-foreground">Enable Google Analytics tracking</p>
                 </div>
                 <Switch id="analytics" />
               </div>
               
               <div className="flex justify-end pt-4">
-                <Button onClick={handleSave}>Save Changes</Button>
+                <Button onClick={handleSave} className="gap-2">
+                  <Save className="h-4 w-4" />
+                  Save Changes
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -143,7 +183,7 @@ const Settings = () => {
                   {['#1a2b47', '#2563eb', '#10b981', '#f59e0b', '#ef4444'].map((color) => (
                     <div 
                       key={color} 
-                      className="w-full aspect-square rounded-md cursor-pointer ring-offset-2 ring-offset-white dark:ring-offset-slate-950 outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:focus-visible:ring-slate-300"
+                      className="w-full aspect-square rounded-md cursor-pointer ring-offset-2 ring-offset-background outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:opacity-80"
                       style={{ backgroundColor: color }}
                     />
                   ))}
@@ -153,7 +193,7 @@ const Settings = () => {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label htmlFor="dark-mode">Dark Mode</Label>
-                  <p className="text-sm text-gray-500">Enable dark mode</p>
+                  <p className="text-sm text-muted-foreground">Enable dark mode</p>
                 </div>
                 <Switch id="dark-mode" />
               </div>
@@ -173,7 +213,10 @@ const Settings = () => {
               </div>
               
               <div className="flex justify-end pt-4">
-                <Button onClick={handleSave}>Save Changes</Button>
+                <Button onClick={handleSave} className="gap-2">
+                  <Save className="h-4 w-4" />
+                  Save Changes
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -191,7 +234,7 @@ const Settings = () => {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label htmlFor="email-notif">Email Notifications</Label>
-                  <p className="text-sm text-gray-500">Receive email when someone contacts you</p>
+                  <p className="text-sm text-muted-foreground">Receive email when someone contacts you</p>
                 </div>
                 <Switch id="email-notif" defaultChecked />
               </div>
@@ -199,7 +242,7 @@ const Settings = () => {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label htmlFor="project-notif">Project Updates</Label>
-                  <p className="text-sm text-gray-500">Notifications about project interactions</p>
+                  <p className="text-sm text-muted-foreground">Notifications about project interactions</p>
                 </div>
                 <Switch id="project-notif" defaultChecked />
               </div>
@@ -207,13 +250,16 @@ const Settings = () => {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label htmlFor="marketing-notif">Marketing Emails</Label>
-                  <p className="text-sm text-gray-500">Receive updates about new features</p>
+                  <p className="text-sm text-muted-foreground">Receive updates about new features</p>
                 </div>
                 <Switch id="marketing-notif" />
               </div>
               
               <div className="flex justify-end pt-4">
-                <Button onClick={handleSave}>Save Changes</Button>
+                <Button onClick={handleSave} className="gap-2">
+                  <Save className="h-4 w-4" />
+                  Save Changes
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -228,31 +274,36 @@ const Settings = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="current-password">Current Password</Label>
-                <Input id="current-password" type="password" />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="new-password">New Password</Label>
-                <Input id="new-password" type="password" />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="confirm-password">Confirm New Password</Label>
-                <Input id="confirm-password" type="password" />
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="current-password">Current Password</Label>
+                  <Input id="current-password" type="password" />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="new-password">New Password</Label>
+                  <Input id="new-password" type="password" />
+                </div>
+                
+                <div className="space-y-2 md:col-span-2">
+                  <Label htmlFor="confirm-password">Confirm New Password</Label>
+                  <Input id="confirm-password" type="password" />
+                </div>
               </div>
               
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label htmlFor="two-factor">Two-Factor Authentication</Label>
-                  <p className="text-sm text-gray-500">Add an extra layer of security</p>
+                  <p className="text-sm text-muted-foreground">Add an extra layer of security</p>
                 </div>
                 <Switch id="two-factor" />
               </div>
               
               <div className="flex justify-end pt-4">
-                <Button onClick={handleSave}>Save Changes</Button>
+                <Button onClick={handleSave} className="gap-2">
+                  <Save className="h-4 w-4" />
+                  Save Changes
+                </Button>
               </div>
             </CardContent>
           </Card>
