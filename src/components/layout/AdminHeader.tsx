@@ -19,7 +19,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ toggleSidebar, collaps
         <button 
           onClick={toggleSidebar} 
           className="p-2 rounded-md hover:bg-secondary text-foreground"
-          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          aria-label={collapsed ? "Expand sidebar" : "Toggle sidebar"}
         >
           {isMobile ? (
             <Menu className="h-5 w-5" />

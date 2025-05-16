@@ -10,13 +10,20 @@ import {
   LogOut,
   X
 } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface AdminSidebarProps {
   collapsed: boolean;
+  visible: boolean;
   toggleSidebar?: () => void;
 }
 
-export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed, toggleSidebar }) => {
+export const AdminSidebar: React.FC<AdminSidebarProps> = ({ 
+  collapsed, 
+  visible, 
+  toggleSidebar 
+}) => {
+  const isMobile = useIsMobile();
   const navItems = [
     { name: 'Dashboard', path: '/admin', icon: <LayoutDashboard size={20} /> },
     { name: 'Projects', path: '/admin/projects', icon: <Folder size={20} /> },
@@ -25,9 +32,18 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed, toggleSid
     { name: 'Settings', path: '/admin/settings', icon: <Settings size={20} /> },
   ];
 
+  // Don't render sidebar at all on mobile if not visible
+  if (isMobile && !visible) {
+    return null;
+  }
+
   return (
     <aside 
-      className={`bg-sidebar text-sidebar-foreground h-screen ${collapsed ? 'w-[70px]' : 'w-64'} transition-all duration-300 flex flex-col shadow-md fixed md:sticky top-0 z-30`}
+      className={`bg-sidebar text-sidebar-foreground h-screen ${collapsed ? 'w-[70px]' : 'w-64'} 
+        transition-all duration-300 flex flex-col shadow-md z-30
+        ${isMobile ? 'fixed' : 'sticky top-0'}
+        ${isMobile && visible ? 'translate-x-0' : isMobile && !visible ? '-translate-x-full' : ''}
+      `}
     >
       <div className={`py-6 px-4 flex items-center ${collapsed ? 'justify-center' : 'justify-between'} relative`}>
         {!collapsed && (
@@ -39,11 +55,11 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed, toggleSid
           </div>
         )}
         
-        {/* Close button - visible only on mobile or when sidebar is expanded */}
-        {(collapsed ? false : true) && toggleSidebar && (
+        {/* Close button - only visible on mobile */}
+        {isMobile && toggleSidebar && (
           <button 
             onClick={toggleSidebar} 
-            className="text-gray-300 hover:text-white p-1 rounded-md hover:bg-sidebar-accent/50 transition-colors absolute right-2 top-6 md:hidden"
+            className="text-gray-300 hover:text-white p-1 rounded-md hover:bg-sidebar-accent/50 transition-colors absolute right-2 top-6"
             aria-label="Close sidebar"
           >
             <X size={20} />
@@ -57,6 +73,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed, toggleSid
             <li key={item.path}>
               <NavLink
                 to={item.path}
+                onClick={isMobile ? toggleSidebar : undefined}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-3 rounded-md transition-colors ${
                     isActive
