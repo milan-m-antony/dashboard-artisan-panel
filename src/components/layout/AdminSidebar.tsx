@@ -7,14 +7,16 @@ import {
   Mail, 
   Settings, 
   User, 
-  LogOut
+  LogOut,
+  X
 } from 'lucide-react';
 
 interface AdminSidebarProps {
   collapsed: boolean;
+  toggleSidebar?: () => void;
 }
 
-export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed }) => {
+export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed, toggleSidebar }) => {
   const navItems = [
     { name: 'Dashboard', path: '/admin', icon: <LayoutDashboard size={20} /> },
     { name: 'Projects', path: '/admin/projects', icon: <Folder size={20} /> },
@@ -27,7 +29,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed }) => {
     <aside 
       className={`bg-sidebar text-sidebar-foreground h-screen ${collapsed ? 'w-[70px]' : 'w-64'} transition-all duration-300 flex flex-col shadow-md fixed md:relative z-20`}
     >
-      <div className={`py-6 px-4 flex items-center ${collapsed ? 'justify-center' : 'justify-between'}`}>
+      <div className={`py-6 px-4 flex items-center ${collapsed ? 'justify-center' : 'justify-between'} relative`}>
         {!collapsed && (
           <h2 className="text-xl font-bold text-white">Portfolio Admin</h2>
         )}
@@ -35,6 +37,17 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed }) => {
           <div className="w-10 h-10 rounded-full bg-sidebar-accent flex items-center justify-center text-white font-bold">
             PA
           </div>
+        )}
+        
+        {/* Close button - visible only on mobile or when sidebar is expanded */}
+        {(collapsed ? false : true) && toggleSidebar && (
+          <button 
+            onClick={toggleSidebar} 
+            className="text-gray-300 hover:text-white p-1 rounded-md hover:bg-sidebar-accent/50 transition-colors absolute right-2 top-6"
+            aria-label="Close sidebar"
+          >
+            <X size={20} />
+          </button>
         )}
       </div>
 

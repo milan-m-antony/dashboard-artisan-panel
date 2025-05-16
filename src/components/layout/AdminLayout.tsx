@@ -19,7 +19,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-background flex transition-colors duration-200">
-      <AdminSidebar collapsed={sidebarCollapsed} />
+      <AdminSidebar collapsed={sidebarCollapsed} toggleSidebar={toggleSidebar} />
       
       <div className="flex-1 transition-all duration-300" style={{ marginLeft: isMobile ? 0 : undefined, width: isMobile ? '100%' : undefined }}>
         <AdminHeader toggleSidebar={toggleSidebar} collapsed={sidebarCollapsed} />
