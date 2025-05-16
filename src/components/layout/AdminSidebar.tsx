@@ -27,7 +27,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed, toggleSid
 
   return (
     <aside 
-      className={`bg-sidebar text-sidebar-foreground h-screen ${collapsed ? 'w-[70px]' : 'w-64'} transition-all duration-300 flex flex-col shadow-md fixed md:relative z-30`}
+      className={`bg-sidebar text-sidebar-foreground h-screen ${collapsed ? 'w-[70px]' : 'w-64'} transition-all duration-300 flex flex-col shadow-md fixed md:sticky top-0 z-30`}
     >
       <div className={`py-6 px-4 flex items-center ${collapsed ? 'justify-center' : 'justify-between'} relative`}>
         {!collapsed && (
@@ -43,7 +43,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed, toggleSid
         {(collapsed ? false : true) && toggleSidebar && (
           <button 
             onClick={toggleSidebar} 
-            className="text-gray-300 hover:text-white p-1 rounded-md hover:bg-sidebar-accent/50 transition-colors absolute right-2 top-6 md:block"
+            className="text-gray-300 hover:text-white p-1 rounded-md hover:bg-sidebar-accent/50 transition-colors absolute right-2 top-6 md:hidden"
             aria-label="Close sidebar"
           >
             <X size={20} />
