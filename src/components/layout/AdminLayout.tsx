@@ -30,9 +30,11 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         toggleSidebar={toggleSidebar} 
       />
       
-      <div className={`flex-1 transition-all duration-300 w-full ${!isMobile && !sidebarCollapsed ? 'md:ml-64' : !isMobile && sidebarCollapsed ? 'md:ml-[70px]' : ''}`}>
+      <div className={`flex-1 transition-all duration-300 w-full 
+        ${!isMobile && !sidebarCollapsed ? 'md:ml-64' : !isMobile && sidebarCollapsed ? 'md:ml-[70px]' : ''}
+      `}>
         <AdminHeader toggleSidebar={toggleSidebar} collapsed={sidebarCollapsed} />
-        <main className="p-3 md:p-6 w-full mx-auto overflow-hidden">
+        <main className="p-3 md:p-6 w-full mx-auto overflow-x-auto">
           <div className="w-full max-w-7xl mx-auto">
             {children}
           </div>

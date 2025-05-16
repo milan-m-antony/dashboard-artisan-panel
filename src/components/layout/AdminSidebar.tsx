@@ -83,7 +83,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
                 }
                 aria-label={item.name}
               >
-                <span>{item.icon}</span>
+                <span className="flex-shrink-0">{item.icon}</span>
                 {!collapsed && <span className="transition-opacity duration-200 text-sm whitespace-nowrap">{item.name}</span>}
               </NavLink>
             </li>
@@ -93,7 +93,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
 
       <div className="p-4 mt-auto">
         <button className={`flex items-center gap-3 w-full px-4 py-2 text-gray-300 hover:text-white rounded-md hover:bg-sidebar-accent/50 transition-colors ${collapsed ? 'justify-center' : ''}`} aria-label="Logout">
-          <LogOut size={20} />
+          <LogOut size={20} className="flex-shrink-0" />
           {!collapsed && <span className="transition-opacity duration-200 text-sm">Logout</span>}
         </button>
       </div>

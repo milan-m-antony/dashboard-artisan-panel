@@ -30,7 +30,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ toggleSidebar, collaps
           )}
         </button>
         <div className="hidden md:flex items-center space-x-2 bg-secondary px-3 py-2 rounded-md">
-          <Search size={18} className="text-muted-foreground" />
+          <Search size={18} className="text-muted-foreground flex-shrink-0" />
           <input 
             type="text" 
             placeholder="Search..." 
@@ -43,11 +43,11 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ toggleSidebar, collaps
       <div className="flex items-center gap-2 md:gap-4">
         <ThemeToggle />
         <button className="relative p-1 md:p-2 rounded-full hover:bg-secondary text-foreground" aria-label="Notifications">
-          <Bell size={isMobile ? 18 : 20} />
+          <Bell size={isMobile ? 18 : 20} className="flex-shrink-0" />
           <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500"></span>
         </button>
         <div className="flex items-center gap-2 md:gap-3">
-          <Avatar className="h-7 w-7 md:h-9 md:w-9">
+          <Avatar className="h-7 w-7 md:h-9 md:w-9 flex-shrink-0">
             <AvatarImage src="https://github.com/shadcn.png" alt="User avatar" />
             <AvatarFallback>JD</AvatarFallback>
           </Avatar>
