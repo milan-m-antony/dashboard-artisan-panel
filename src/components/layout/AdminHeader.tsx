@@ -1,8 +1,9 @@
 
 import React from 'react';
-import { Bell, ChevronLeft, ChevronRight, Search } from 'lucide-react';
+import { Bell, ChevronLeft, ChevronRight, Search, Menu } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface AdminHeaderProps {
   toggleSidebar: () => void;
@@ -10,15 +11,19 @@ interface AdminHeaderProps {
 }
 
 export const AdminHeader: React.FC<AdminHeaderProps> = ({ toggleSidebar, collapsed }) => {
+  const isMobile = useIsMobile();
+  
   return (
-    <header className="bg-background border-b border-border py-4 px-6 flex items-center justify-between transition-colors duration-200">
-      <div className="flex items-center gap-4">
+    <header className="bg-background border-b border-border py-3 px-4 md:py-4 md:px-6 flex items-center justify-between transition-colors duration-200 sticky top-0 z-20">
+      <div className="flex items-center gap-2 md:gap-4">
         <button 
           onClick={toggleSidebar} 
           className="p-2 rounded-md hover:bg-secondary text-foreground"
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
-          {collapsed ? (
+          {isMobile ? (
+            <Menu className="h-5 w-5" />
+          ) : collapsed ? (
             <ChevronRight className="h-5 w-5" />
           ) : (
             <ChevronLeft className="h-5 w-5" />
@@ -35,14 +40,14 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ toggleSidebar, collaps
         </div>
       </div>
       
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 md:gap-4">
         <ThemeToggle />
-        <button className="relative p-2 rounded-full hover:bg-secondary text-foreground" aria-label="Notifications">
-          <Bell size={20} />
+        <button className="relative p-1 md:p-2 rounded-full hover:bg-secondary text-foreground" aria-label="Notifications">
+          <Bell size={isMobile ? 18 : 20} />
           <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500"></span>
         </button>
-        <div className="flex items-center gap-3">
-          <Avatar className="h-9 w-9">
+        <div className="flex items-center gap-2 md:gap-3">
+          <Avatar className="h-7 w-7 md:h-9 md:w-9">
             <AvatarImage src="https://github.com/shadcn.png" alt="User avatar" />
             <AvatarFallback>JD</AvatarFallback>
           </Avatar>

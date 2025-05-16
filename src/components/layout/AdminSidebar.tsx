@@ -27,7 +27,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed, toggleSid
 
   return (
     <aside 
-      className={`bg-sidebar text-sidebar-foreground h-screen ${collapsed ? 'w-[70px]' : 'w-64'} transition-all duration-300 flex flex-col shadow-md fixed md:relative z-20`}
+      className={`bg-sidebar text-sidebar-foreground h-screen ${collapsed ? 'w-[70px]' : 'w-64'} transition-all duration-300 flex flex-col shadow-md fixed md:relative z-30`}
     >
       <div className={`py-6 px-4 flex items-center ${collapsed ? 'justify-center' : 'justify-between'} relative`}>
         {!collapsed && (
@@ -43,7 +43,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed, toggleSid
         {(collapsed ? false : true) && toggleSidebar && (
           <button 
             onClick={toggleSidebar} 
-            className="text-gray-300 hover:text-white p-1 rounded-md hover:bg-sidebar-accent/50 transition-colors absolute right-2 top-6"
+            className="text-gray-300 hover:text-white p-1 rounded-md hover:bg-sidebar-accent/50 transition-colors absolute right-2 top-6 md:block"
             aria-label="Close sidebar"
           >
             <X size={20} />
@@ -67,7 +67,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed, toggleSid
                 aria-label={item.name}
               >
                 <span>{item.icon}</span>
-                {!collapsed && <span className="transition-opacity duration-200">{item.name}</span>}
+                {!collapsed && <span className="transition-opacity duration-200 text-sm whitespace-nowrap">{item.name}</span>}
               </NavLink>
             </li>
           ))}
@@ -77,7 +77,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ collapsed, toggleSid
       <div className="p-4 mt-auto">
         <button className={`flex items-center gap-3 w-full px-4 py-2 text-gray-300 hover:text-white rounded-md hover:bg-sidebar-accent/50 transition-colors ${collapsed ? 'justify-center' : ''}`} aria-label="Logout">
           <LogOut size={20} />
-          {!collapsed && <span className="transition-opacity duration-200">Logout</span>}
+          {!collapsed && <span className="transition-opacity duration-200 text-sm">Logout</span>}
         </button>
       </div>
     </aside>

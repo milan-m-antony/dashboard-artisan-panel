@@ -18,12 +18,12 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex transition-colors duration-200">
+    <div className="min-h-screen bg-background flex flex-col md:flex-row transition-colors duration-200">
       <AdminSidebar collapsed={sidebarCollapsed} toggleSidebar={toggleSidebar} />
       
-      <div className="flex-1 transition-all duration-300" style={{ marginLeft: isMobile ? 0 : undefined, width: isMobile ? '100%' : undefined }}>
+      <div className="flex-1 transition-all duration-300 w-full overflow-x-hidden">
         <AdminHeader toggleSidebar={toggleSidebar} collapsed={sidebarCollapsed} />
-        <main className="p-4 md:p-6 max-w-7xl mx-auto">
+        <main className="p-3 md:p-6 max-w-full md:max-w-7xl mx-auto overflow-x-auto">
           {children}
         </main>
       </div>
